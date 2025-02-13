@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { fetchItems, createItem, updateItem, deleteItem } from "./services/api";
+import Layout from "./Components/Layout";
 import ItemList from "./Components/ItemList";
 import ItemForm from "./Components/ItemForm";
 
@@ -19,7 +20,7 @@ export default function App() {
       try {
         const data = await fetchItems();
         setItems(data);
-        console.log(data)
+        console.log(data);
       } catch (error) {
         console.error("Error fetching items:", error);
       }
@@ -54,26 +55,27 @@ export default function App() {
   };
 
   return (
-<div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6">
-  {/* Item List (Takes 2 Columns on md/lg screens) */}
-  <div className="md:col-span-2">
-    <ItemList 
-      items={items} 
-      onDelete={handleDeleteItem} 
-      onEdit={setItemToEdit} 
-      itemToEdit={itemToEdit} 
-    />
-  </div>
+    <Layout>
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6">
+        {/* Item List (Takes 2 Columns on md/lg screens) */}
+        <div className="md:col-span-2">
+          <ItemList
+            items={items}
+            onDelete={handleDeleteItem}
+            onEdit={setItemToEdit}
+            itemToEdit={itemToEdit}
+          />
+        </div>
 
-  {/* Form (Always on Right Side for md/lg) */}
-  <div className="md:col-span-1 sticky top-4 self-start">
-    <ItemForm 
-      onSave={handleSaveItem} 
-      itemToEdit={itemToEdit} 
-      setItemToEdit={setItemToEdit} 
-    />
-  </div>
-</div>
-
+        {/* Form (Always on Right Side for md/lg) */}
+        <div className="md:col-span-1 sticky top-4 self-start">
+          <ItemForm
+            onSave={handleSaveItem}
+            itemToEdit={itemToEdit}
+            setItemToEdit={setItemToEdit}
+          />
+        </div>
+      </div>
+    </Layout>
   );
 }

@@ -34,8 +34,8 @@ const ItemForm = ({ onSave, itemToEdit, setItemToEdit }: ItemFormProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}  className={`p-4 rounded-lg shadow-md transition-all duration-300 
-      ${itemToEdit ? "bg-yellow-300 border-yellow-500 scale-105" : "bg-gray-200 border-gray-300"}`} >
+    <form onSubmit={handleSubmit}     className={`p-6 rounded-xl shadow-lg border-4 transition-all duration-300 w-full
+      ${itemToEdit ? "bg-[#e0e9ff] border-[#9eb6ff] scale-105 shadow-2xl" : "bg-gray-100 border-gray-300"}`}>
       <input
         type="text"
         placeholder="Title"
@@ -43,15 +43,16 @@ const ItemForm = ({ onSave, itemToEdit, setItemToEdit }: ItemFormProps) => {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
-      <textarea
-        placeholder="Description"
-        className="w-full p-2 mb-2 border rounded"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-      />
-      <button type="submit" className="w-full p-2 bg-green-500 text-white rounded">
-        {itemToEdit ? "Update Item" : "Add Item"}
-      </button>
+     <textarea 
+  placeholder="Description" 
+  value={description} 
+  onChange={(e) => setDescription(e.target.value)} 
+  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#9eb6ff] outline-none h-32" 
+/>
+   <button type="submit" 
+      className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+      {itemToEdit ? "Update Item" : "Add Item"}
+    </button>
     </form>
   );
 };
