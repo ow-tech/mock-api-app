@@ -34,7 +34,8 @@ const ItemForm = ({ onSave, itemToEdit, setItemToEdit }: ItemFormProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 bg-white rounded-lg shadow-md">
+    <form onSubmit={handleSubmit}  className={`p-4 rounded-lg shadow-md transition-all duration-300 
+      ${itemToEdit ? "bg-yellow-300 border-yellow-500 scale-105" : "bg-gray-200 border-gray-300"}`} >
       <input
         type="text"
         placeholder="Title"
