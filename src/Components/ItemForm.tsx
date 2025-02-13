@@ -1,33 +1,58 @@
 import { useState, useEffect } from "react";
 
 interface Item {
-    id: number;
-    title: string;
-    description: string;
-  }
+  id: number;
+  title: string;
+  description: string;
+}
 
-  const ItemForm = () => {
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
+interface ItemFormProps {
+  onSave: (item: Item) => void;
+  itemToEdit: Item | null;
+  setItemToEdit: (item: Item | null) => void;
+}
+
+const ItemForm = ({ onSave, itemToEdit, setItemToEdit }: ItemFormProps) => {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+
+  useEffect(() => {
+    if (itemToEdit) {
+      setTitle(itemToEdit.title);
+      setDescription(itemToEdit.description);
+    }
+  }, [itemToEdit]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (title.trim() && description.trim()) {
+      onSave({ id: itemToEdit ? itemToEdit.id : Date.now(), title, description });
+      setTitle("");
+      setDescription("");
+      setItemToEdit(null);
+    }
+  };
 
   return (
-    <form  className="p-4 bg-white rounded-lg shadow-md">
+    <form onSubmit={handleSubmit} className="p-4 bg-white rounded-lg shadow-md">
       <input
         type="text"
         placeholder="Title"
         className="w-full p-2 mb-2 border rounded"
         value={title}
-        
+        onChange={(e) => setTitle(e.target.value)}
       />
       <textarea
         placeholder="Description"
         className="w-full p-2 mb-2 border rounded"
         value={description}
-        
+        onChange={(e) => setDescription(e.target.value)}
       />
-    
+      <button type="submit" className="w-full p-2 bg-green-500 text-white rounded">
+        {itemToEdit ? "Update Item" : "Add Item"}
+      </button>
     </form>
   );
+};
 
-  };
 export default ItemForm;

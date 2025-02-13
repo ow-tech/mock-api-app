@@ -1,4 +1,4 @@
-import ItemCard from './ItemCard';
+import ItemCard from "./ItemCard";
 
 interface Item {
   id: number;
@@ -7,22 +7,30 @@ interface Item {
 }
 
 interface ItemListProps {
-    items: Item[];
- 
-  }
+  items: Item[];
+  onDelete: (id: number) => void;
+  onEdit: (item: Item) => void;
+  itemToEdit: Item | null;
+}
 
-  const ItemList = ({ items}: ItemListProps) => {
-    return (
-      <div className="space-y-2">
-        {items.length > 0 ? (
-          items.map((item) => (
-            <ItemCard key={item.id} item={item} />
-          ))
-        ) : (
-          <p className="text-gray-600 text-center">No items available.</p>
-        )}
-      </div>
-    );
-  };
-  
-  export default ItemList;
+const ItemList: React.FC<ItemListProps> = ({ items, onDelete, onEdit, itemToEdit }) => {
+  return (
+    <div className="space-y-2">
+      {items.length > 0 ? (
+        items.map((item) => (
+          <ItemCard
+            key={item.id}
+            item={item}
+            onDelete={onDelete}
+            onEdit={onEdit}
+            isEditing={itemToEdit?.id === item.id}
+          />
+        ))
+      ) : (
+        <p className="text-gray-600 text-center">No items available.</p>
+      )}
+    </div>
+  );
+};
+
+export default ItemList;

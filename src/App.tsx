@@ -1,8 +1,7 @@
-// import logo from './logo.svg';
-import './App.css';
 import { useState, useEffect } from "react";
-import { fetchItems } from "./services/api";
-
+import { fetchItems, createItem, updateItem, deleteItem } from "./services/api";
+import ItemList from "./Components/ItemList";
+import ItemForm from "./Components/ItemForm";
 
 interface Item {
   id: number;
@@ -20,6 +19,7 @@ export default function App() {
       try {
         const data = await fetchItems();
         setItems(data);
+        console.log(data)
       } catch (error) {
         console.error("Error fetching items:", error);
       }
@@ -27,20 +27,37 @@ export default function App() {
     getItems();
   }, []);
 
-  
+  // Handle Add / Update Item
+  const handleSaveItem = async (item: Item) => {
+    try {
+      if (itemToEdit) {
+        await updateItem(item);
+        setItems((prev) => prev.map((i) => (i.id === item.id ? item : i)));
+        setItemToEdit(null);
+      } else {
+        const newItem = await createItem(item);
+        setItems((prev) => [...prev, newItem]);
+      }
+    } catch (error) {
+      console.error("Error saving item:", error);
+    }
+  };
+
+  // Handle Delete Item
+  const handleDeleteItem = async (id: number) => {
+    try {
+      await deleteItem(id);
+      setItems((prev) => prev.filter((item) => item.id !== id));
+    } catch (error) {
+      console.error("Error deleting item:", error);
+    }
+  };
 
   return (
     <div className="max-w-lg mx-auto p-6 space-y-4 bg-gray-100 min-h-screen">
       <h1 className="text-2xl font-bold text-center">Item List</h1>
-       {/* Map through items and display */}
-       <ul className="space-y-2">
-        {items.map((item) => (
-          <li key={item.id} className="p-4 bg-white shadow-md rounded-md">
-            <h2 className="text-lg font-semibold">{item.title}</h2>
-            <p className="text-gray-600">{item.description}</p>
-          </li>
-        ))}
-      </ul>
+      <ItemForm onSave={handleSaveItem} itemToEdit={itemToEdit} setItemToEdit={setItemToEdit} />
+      <ItemList items={items} onDelete={handleDeleteItem} onEdit={setItemToEdit} itemToEdit={itemToEdit} />
     </div>
   );
 }
