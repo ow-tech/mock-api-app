@@ -18,33 +18,65 @@ interface Item {
 
 // Fetch items from API and map 'body' to 'description'
 export const fetchItems = async (): Promise<Item[]> => {
-  const response = await axios.get<ApiItem[]>(API_URL);
-  return response.data.slice(0, 10).map((item) => ({
-    id: item.id,
-    title: item.title,
-    description: item.body, // Convert 'body' to 'description'
-  }));
+  try {
+    const response = await axios.get<ApiItem[]>(API_URL);
+    return response.data.slice(0, 10).map((item) => ({
+      id: item.id,
+      title: item.title,
+      description: item.body,
+    }));
+  } catch (error) {
+    throw new Error(
+      error instanceof Error ? error.message : "Failed to fetch items."
+    );
+  }
 };
-
 // Create an item and ensure correct structure
-export const createItem = async (item: { title: string; description: string }): Promise<Item> => {
-  const response = await axios.post<ApiItem>(API_URL, { 
-    title: item.title, 
-    body: item.description // Convert 'description' to 'body' for API
-  });
-  
-  return { id: response.data.id, title: response.data.title, description: response.data.body };
+export const createItem = async (item: {
+  title: string;
+  description: string;
+}): Promise<Item> => {
+  try {
+    const response = await axios.post<ApiItem>(API_URL, {
+      title: item.title,
+      body: item.description,
+    });
+    return {
+      id: response.data.id,
+      title: response.data.title,
+      description: response.data.body,
+    };
+  } catch (error) {
+    console.error("Error creating item:", error);
+    throw new Error(
+      error instanceof Error ? error.message : "Failed to create item."
+    );
+  }
 };
 
 // Update an item in the API
 export const updateItem = async (item: Item) => {
-  await axios.put(`${API_URL}/${item.id}`, { 
-    title: item.title, 
-    body: item.description // Convert 'description' to 'body'
-  });
+  try {
+    await axios.put(`${API_URL}/${item.id}`, {
+      title: item.title,
+      body: item.description,
+    });
+  } catch (error) {
+    console.error(`Error updating item with ID ${item.id}:`, error);
+    throw new Error(
+      error instanceof Error ? error.message : "Failed to update item."
+    );
+  }
 };
 
 // Delete an item
 export const deleteItem = async (id: number) => {
-  await axios.delete(`${API_URL}/${id}`);
+  try {
+    await axios.delete(`${API_URL}/${id}`);
+  } catch (error) {
+    console.error(`Error deleting item with ID ${id}:`, error);
+    throw new Error(
+      error instanceof Error ? error.message : "Failed to delete item."
+    );
+  }
 };

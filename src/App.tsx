@@ -13,6 +13,7 @@ interface Item {
 export default function App() {
   const [items, setItems] = useState<Item[]>([]);
   const [itemToEdit, setItemToEdit] = useState<Item | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   // Fetch items on initial render
   useEffect(() => {
@@ -20,9 +21,8 @@ export default function App() {
       try {
         const data = await fetchItems();
         setItems(data);
-        console.log(data);
       } catch (error) {
-        console.error("Error fetching items:", error);
+        setError(error instanceof Error ? error.message : "Failed to get Items.");
       }
     };
     getItems();
@@ -40,7 +40,7 @@ export default function App() {
         setItems((prev) => [...prev, newItem]);
       }
     } catch (error) {
-      console.error("Error saving item:", error);
+      setError(error instanceof Error ? error.message : "Failed to save item.");
     }
   };
 
@@ -50,12 +50,23 @@ export default function App() {
       await deleteItem(id);
       setItems((prev) => prev.filter((item) => item.id !== id));
     } catch (error) {
-      console.error("Error deleting item:", error);
+      setError(error instanceof Error ? error.message : "Failed to delete item.");
     }
   };
 
   return (
     <Layout>
+          {error && (
+        <div className="bg-red-100 text-red-700 p-3 rounded-md mb-4 border border-red-400">
+          {error}
+          <button
+            onClick={() => setError(null)}
+            className="ml-4 text-red-500 font-bold"
+          >
+            ✖
+          </button>
+        </div>
+      )}
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6">
         {/* Item List (Takes 2 Columns on md/lg screens) */}
         <div className="md:col-span-2">
