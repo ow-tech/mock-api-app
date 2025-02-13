@@ -14,6 +14,7 @@ export default function App() {
   const [items, setItems] = useState<Item[]>([]);
   const [itemToEdit, setItemToEdit] = useState<Item | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
   // Fetch items on initial render
   useEffect(() => {
@@ -22,25 +23,33 @@ export default function App() {
         const data = await fetchItems();
         setItems(data);
       } catch (error) {
-        setError(error instanceof Error ? error.message : "Failed to get Items.");
+        setError(
+          error instanceof Error ? error.message : "Failed to get Items."
+        );
       }
     };
     getItems();
   }, []);
 
   // Handle Add / Update Item
-  const handleSaveItem = async (item: Item) => {
+  const handleSaveItem = async (item: {
+    id?: number;
+    title: string;
+    description: string;
+  }) => {
     try {
-      if (itemToEdit) {
-        await updateItem(item);
-        setItems((prev) => prev.map((i) => (i.id === item.id ? item : i)));
+      if (item.id) {
+        await updateItem(item as Item);
+        setItems((prev) =>
+          prev.map((i) => (i.id === item.id ? (item as Item) : i))
+        );
         setItemToEdit(null);
       } else {
         const newItem = await createItem(item);
         setItems((prev) => [...prev, newItem]);
       }
     } catch (error) {
-      setError(error instanceof Error ? error.message : "Failed to save item.");
+      console.error("Error saving item:", error);
     }
   };
 
@@ -50,13 +59,22 @@ export default function App() {
       await deleteItem(id);
       setItems((prev) => prev.filter((item) => item.id !== id));
     } catch (error) {
-      setError(error instanceof Error ? error.message : "Failed to delete item.");
+      setError(
+        error instanceof Error ? error.message : "Failed to delete item."
+      );
     }
   };
 
+  // Sort items based on sort order
+  const sortedItems = [...items].sort((a, b) => {
+    return sortOrder === "asc"
+      ? a.title.localeCompare(b.title)
+      : b.title.localeCompare(a.title);
+  });
+
   return (
     <Layout>
-          {error && (
+      {error && (
         <div className="bg-red-100 text-red-700 p-3 rounded-md mb-4 border border-red-400">
           {error}
           <button
@@ -67,11 +85,22 @@ export default function App() {
           </button>
         </div>
       )}
+
+      {/* Sorting Controls */}
+      <div className="flex justify-end mb-4">
+        <button
+          className="px-4 py-2 bg-blue-500 text-white rounded-md"
+          onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
+        >
+          Sort {sortOrder === "asc" ? "Descending" : "Ascending"}
+        </button>
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6">
         {/* Item List (Takes 2 Columns on md/lg screens) */}
         <div className="md:col-span-2">
           <ItemList
-            items={items}
+            items={sortedItems}
             onDelete={handleDeleteItem}
             onEdit={setItemToEdit}
             itemToEdit={itemToEdit}

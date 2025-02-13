@@ -7,14 +7,14 @@ interface Item {
 }
 
 interface ItemFormProps {
-  onSave: (item: Item) => void;
-  itemToEdit: Item | null;
-  setItemToEdit: (item: Item | null) => void;
+  onSave: (item: { id?: number; title: string; description: string }) => void;
+  itemToEdit: { id?: number; title: string; description: string } | null;
+  setItemToEdit: (item: any) => void;
 }
 
 const ItemForm = ({ onSave, itemToEdit, setItemToEdit }: ItemFormProps) => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState(itemToEdit?.title || "");
+  const [description, setDescription] = useState(itemToEdit?.description || "");
 
   useEffect(() => {
     if (itemToEdit) {
@@ -25,13 +25,16 @@ const ItemForm = ({ onSave, itemToEdit, setItemToEdit }: ItemFormProps) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (title.trim() && description.trim()) {
-      onSave({ id: itemToEdit ? itemToEdit.id : Date.now(), title, description });
-      setTitle("");
-      setDescription("");
-      setItemToEdit(null);
+    if (!title.trim() || !description.trim()) {
+      alert("Title and description cannot be empty.");
+      return;
     }
+    onSave({ id: itemToEdit?.id, title, description });
+    setTitle("");
+    setDescription("");
+    setItemToEdit(null);
   };
+
 
   return (
     <form onSubmit={handleSubmit}     className={`p-6 rounded-xl shadow-lg border-4 transition-all duration-300 w-full
