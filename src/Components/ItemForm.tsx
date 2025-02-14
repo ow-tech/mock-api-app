@@ -18,6 +18,10 @@ const ItemForm = ({ onSave, itemToEdit, setItemToEdit,setIsOpen }: ItemFormProps
     if (itemToEdit) {
       setTitle(itemToEdit.title);
       setDescription(itemToEdit.description);
+    
+    }else {
+      setTitle("");
+      setDescription("");
     }
   }, [itemToEdit]);
 
@@ -42,36 +46,41 @@ const ItemForm = ({ onSave, itemToEdit, setItemToEdit,setIsOpen }: ItemFormProps
     setIsOpen(false);
   };
   return (
-    <form onSubmit={handleSubmit}     className={`p-6 rounded-xl shadow-lg border-4 transition-all duration-300 w-full
-      ${itemToEdit ? "bg-[#e0e9ff] border-[#9eb6ff] scale-105 shadow-2xl" : "bg-gray-100 border-gray-300"}`}>
-      <input
-        type="text"
-        placeholder="Title"
-        className="w-full p-2 mb-2 border rounded"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
-     <textarea 
-  placeholder="Description" 
-  value={description} 
-  onChange={(e) => setDescription(e.target.value)} 
-  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#9eb6ff] outline-none h-32" 
-/>
-<div className="flex justify-between mt-4">
-        <button 
-          type="submit" 
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition w-1/2 mr-2">
-          {itemToEdit ? "Update Item" : "Add Item"}
-        </button>
+    <form
+    onSubmit={handleSubmit}
+    className={`p-6 rounded-xl shadow-lg border-4 transition-all duration-300 w-full ${
+      itemToEdit ? "bg-[#e0e9ff] border-[#9eb6ff] scale-105 shadow-2xl" : "bg-gray-100 border-gray-300"
+    }`}
+  >
+    <input
+      type="text"
+      placeholder="Title"
+      className="w-full p-2 mb-2 border rounded"
+      value={title}
+      onChange={(e) => setTitle(e.target.value)}
+    />
 
-        <button 
-          type="button" 
-          className="px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500 transition w-1/2"
-          onClick={handleCancel}>
-          Cancel
-        </button>
-      </div>
-    </form>
+    <textarea
+      placeholder="Description"
+      value={description}
+      onChange={(e) => setDescription(e.target.value)}
+      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#9eb6ff] outline-none h-32"
+    />
+
+    <div className="flex justify-between mt-4">
+      <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition w-1/2 mr-2">
+        {itemToEdit ? "Update" : "Add"}
+      </button>
+
+      <button
+        type="button"
+        className="px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500 transition w-1/2"
+        onClick={handleCancel}
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
   );
 };
 

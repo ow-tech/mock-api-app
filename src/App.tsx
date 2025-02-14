@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { fetchItems, createItem, updateItem, deleteItem } from "./services/api";
 import Layout from "./Components/Layout";
-import ItemList from "./Components/ItemList";
+// import ItemList from "./Components/ItemList";
 import ItemCard from "./Components/ItemCard";
 import ItemForm from "./Components/ItemForm";
 import { Item } from "./types";
@@ -46,7 +46,9 @@ export default function App() {
         setItems((prev) => [...prev, newItem]);
       }
     } catch (error) {
-      console.error("Error saving item:", error);
+      setError(
+        error instanceof Error ? error.message : "Failed to Save item."
+      );
     }
   };
   
@@ -71,6 +73,10 @@ export default function App() {
       ? a.title.localeCompare(b.title)
       : b.title.localeCompare(a.title);
   });
+
+  const handleCancelEdit = () => {
+    setItemToEdit(null); // Exit edit mode without saving
+  };
 
   return (
     <Layout>
@@ -106,14 +112,15 @@ export default function App() {
         </div>
       </div>
       <div className="grid md:grid-cols-3 gap-4">
-        {items.map((item) => (
+        {sortedItems.map((item) => (
           <ItemCard
             key={item.id}
             item={item}
-            
+            onUpdate={handleSaveItem}
             onDelete={handleDeleteItem}
             isEditing={itemToEdit?.id === item.id}
             onEdit={() => setItemToEdit(item)} 
+            onCancelEdit={handleCancelEdit}
           />
         ))}
       </div>

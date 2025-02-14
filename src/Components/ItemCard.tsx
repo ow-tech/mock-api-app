@@ -1,10 +1,13 @@
+import { useState } from "react";
 import { Item } from './../types'
 
 interface ItemCardProps {
   item: Item;
-  onDelete: (id: number) => void;
-  onEdit: (item: Item) => void;
   isEditing: boolean;
+  onEdit: () => void;
+  onUpdate: (updatedItem: Item) => void;
+  onDelete: (id: number) => void;
+  onCancelEdit: () => void;
 }
 
 const ItemCard: React.FC<ItemCardProps> = ({
@@ -12,44 +15,76 @@ const ItemCard: React.FC<ItemCardProps> = ({
   onDelete,
   onEdit,
   isEditing,
+  onUpdate,
+  onCancelEdit 
 }) => {
+
+  const [title, setTitle] = useState(item.title);
+  const [description, setDescription] = useState(item.description);
+
+
+  const handleUpdate = () => {
+    onUpdate({ ...item, title, description });
+  };
+
+
   return (
-    <div className={`p-5 border-4 rounded-xl shadow-lg bg-white transition-all 
-        ${isEditing ? "border-[#9eb6ff] bg-[#e0e9ff] scale-105 shadow-2xl" : "border-gray-300"}
-        h-[260px] flex flex-col justify-between`}>    
-    
-      {/* Title */}
-      <h2 className="text-lg font-semibold text-gray-800 mb-2 border-b-2 pb-2">
-        {item.title}
-      </h2>
+    <div className="p-4 border rounded-lg shadow-md bg-white">
+    {isEditing ? (
+      <>
+        <input
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className="w-full p-2 border rounded mb-2"
+        />
+        <textarea
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          className="w-full p-2 border rounded"
+        />
+      </>
+    ) : (
+      <>
+        <h3 className="text-lg font-semibold">{item.title}</h3>
+        <p className="text-gray-600">{item.description}</p>
+      </>
+    )}
 
-      {/* Description */}
-      <p className="text-gray-600 text-sm lg:text-base flex-grow line-clamp-3">
-        {item.description}
-      </p>
-
-      {/* Action Buttons */}
-      <div className="flex justify-between mt-4">
-        <button
-          onClick={() => onEdit(item)}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-        >
-          Edit
-        </button>
-        <button
-          onClick={() => item.id !== undefined && onDelete(item.id)}
-          className={`px-4 py-2 bg-red-500 text-white rounded-lg transition 
-                  ${
-                    isEditing
-                      ? "opacity-50 cursor-not-allowed"
-                      : "hover:bg-red-600"
-                  }`}
-          disabled={isEditing}
-        >
-          Delete
-        </button>
+<div className="flex justify-between text-sm mt-4 border-t pt-2">
+        {isEditing ? (
+          <>
+            <span 
+              onClick={handleUpdate} 
+              className="cursor-pointer text-green-600 hover:text-green-700 hover:underline"
+            >
+              Update
+            </span>
+            <span 
+              onClick={onCancelEdit} 
+              className="cursor-pointer text-gray-500 hover:text-gray-600 hover:underline"
+            >
+              Cancel
+            </span>
+          </>
+        ) : (
+          <>
+            <span 
+              onClick={onEdit} 
+              className="cursor-pointer text-blue-600 hover:text-blue-700 hover:underline"
+            >
+              Edit
+            </span>
+            <span 
+              onClick={() => onDelete(item.id)} 
+              className="cursor-pointer text-red-500 hover:text-red-600 hover:underline"
+            >
+              Delete
+            </span>
+          </>
+        )}
       </div>
-    </div>
+  </div>
   );
 };
 
