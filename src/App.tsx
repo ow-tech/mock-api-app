@@ -15,6 +15,7 @@ export default function App() {
   const [itemToEdit, setItemToEdit] = useState<Item | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  const [isOpen, setIsOpen] = useState(false);
 
   // Fetch items on initial render
   useEffect(() => {
@@ -113,6 +114,8 @@ export default function App() {
             onSave={handleSaveItem}
             itemToEdit={itemToEdit}
             setItemToEdit={setItemToEdit}
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
           />
         </div>
       </div>

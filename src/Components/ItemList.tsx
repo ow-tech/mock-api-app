@@ -1,10 +1,6 @@
 import ItemCard from "./ItemCard";
+import { Item } from './../types'
 
-interface Item {
-  id: number;
-  title: string;
-  description: string;
-}
 
 interface ItemListProps {
   items: Item[];

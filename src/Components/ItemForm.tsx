@@ -1,15 +1,13 @@
 import { useState, useEffect } from "react";
 
-interface Item {
-  id: number;
-  title: string;
-  description: string;
-}
+import { Item } from './../types'
 
 interface ItemFormProps {
-  onSave: (item: { id?: number; title: string; description: string }) => void;
-  itemToEdit: { id?: number; title: string; description: string } | null;
-  setItemToEdit: (item: any) => void;
+  onSave: (item: Item) => void;
+  itemToEdit: Item | null;
+  setItemToEdit: React.Dispatch<React.SetStateAction<Item | null>>;
+  isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ItemForm = ({ onSave, itemToEdit, setItemToEdit }: ItemFormProps) => {
@@ -29,7 +27,7 @@ const ItemForm = ({ onSave, itemToEdit, setItemToEdit }: ItemFormProps) => {
       alert("Title and description cannot be empty.");
       return;
     }
-    onSave({ id: itemToEdit?.id, title, description });
+    onSave({ id: itemToEdit?.id ?? Date.now(), title, description });
     setTitle("");
     setDescription("");
     setItemToEdit(null);

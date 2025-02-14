@@ -1,8 +1,4 @@
-interface Item {
-  id: number;
-  title: string;
-  description: string;
-}
+import { Item } from './../types'
 
 interface ItemCardProps {
   item: Item;
@@ -41,7 +37,7 @@ const ItemCard: React.FC<ItemCardProps> = ({
           Edit
         </button>
         <button
-          onClick={() => onDelete(item.id)}
+          onClick={() => item.id !== undefined && onDelete(item.id)}
           className={`px-4 py-2 bg-red-500 text-white rounded-lg transition 
                   ${
                     isEditing
