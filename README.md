@@ -1,70 +1,91 @@
-# Getting Started with Create React App
+# Mock API App - Local Setup Guide
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Prerequisites
+Ensure you have the following installed before proceeding:
+- **Node.js** v18.20.6 (for compatibility with dependencies)
+- **npm** (comes with Node.js)
+- A code editor of your choice (e.g., VS Code, WebStorm)
 
-## Available Scripts
+## Installation Steps
 
-In the project directory, you can run:
+1. **Clone the Repository**
+   ```sh
+   git clone https://github.com/ow-tech/mock-api-app.git
+   ```
 
-### `npm start`
+2. **Navigate to the Project Directory**
+   ```sh
+   cd mock-api-app
+   ```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+3. **Open in Your Preferred Code Editor**
+   
+   Example: If using VS Code, run:
+   ```sh
+   code .
+   ```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+4. **Install Dependencies**
+   While in the root directory, open the terminal and run:
+   ```sh
+   npm install
+   ```
 
-### `npm test`
+## Running the Application
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+To start the development server, run:
+```sh
+npm start
+```
 
-### `npm run build`
+The application should now be running at `http://localhost:3000/`.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Technologies Used
+- **React** v18.2.0
+- **Tailwind CSS** v3.4.17
+- **TypeScript**
+- **Node.js** v18.20.6
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Application Features and Requirements
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Setup:
+- Created using **Create React App** with TypeScript.
+- Integrated **Tailwind CSS** for styling.
 
-### `npm run eject`
+### Mock API:
+- Uses **JSONPlaceholder** (https://jsonplaceholder.typicode.com/) for simulating server interactions.
+- Implements endpoints for fetching, creating, updating, and deleting items.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Component Structure:
+- Displays a list of items.
+- Each item contains a **title** and **description**.
+- Includes a form for adding new items.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Functionality:
+- Fetches and displays item lists from the mock API.
+- Supports adding new items and updating the UI accordingly.
+- Allows users to delete items.
+- Implements basic error handling for API calls.
+- - Editing existing item titles or descriptions.
+- sorting for the item list.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Styling:
+- Uses **Tailwind CSS** for styling components.
+- Ensures a **responsive design** for both desktop and mobile devices.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Deployment:
+- The application is deployed on **Vercel**
+- Deployed Application URL: **[https://mock-api-app-git-develop-ow-techs-projects.vercel.app]**
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
+## Additional Notes
+- If you encounter any issues, ensure you have the correct Node.js version installed.
+- Tailwind CSS version 3.4.17 is used for stability.
+- Modify the `package.json` scripts if needed for custom configurations.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Enjoy developing! 🚀
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
