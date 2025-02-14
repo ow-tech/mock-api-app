@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Item } from './../types'
+import { FaSpinner } from "react-icons/fa";
 
 interface ItemCardProps {
   item: Item;
@@ -8,6 +9,8 @@ interface ItemCardProps {
   onUpdate: (updatedItem: Item) => void;
   onDelete: (id: number) => void;
   onCancelEdit: () => void;
+  loadingItemId: number | null;
+  deletingItemId: number | null;
 }
 
 const ItemCard: React.FC<ItemCardProps> = ({
@@ -16,7 +19,9 @@ const ItemCard: React.FC<ItemCardProps> = ({
   onEdit,
   isEditing,
   onUpdate,
-  onCancelEdit 
+  onCancelEdit ,
+  loadingItemId,
+  deletingItemId
 }) => {
 
   const [title, setTitle] = useState(item.title);
@@ -29,7 +34,7 @@ const ItemCard: React.FC<ItemCardProps> = ({
 
 
   return (
-    <div className="p-4 border rounded-lg shadow-md bg-white">
+    <div className="p-4 border rounded-lg shadow-md bg-white flex flex-col justify-between min-h-[220px]">
     {isEditing ? (
       <>
         <input
@@ -56,9 +61,15 @@ const ItemCard: React.FC<ItemCardProps> = ({
           <>
             <span 
               onClick={handleUpdate} 
-              className="cursor-pointer text-green-600 hover:text-green-700 hover:underline"
+              className="cursor-pointer text-green-600 hover:text-green-700 hover:underline flex items-center gap-2"
             >
-              Update
+            {loadingItemId === item.id ? (
+                <>
+                  <FaSpinner className="animate-spin" /> Updating...
+                </>
+              ) : (
+                "Update"
+              )}
             </span>
             <span 
               onClick={onCancelEdit} 
@@ -77,9 +88,16 @@ const ItemCard: React.FC<ItemCardProps> = ({
             </span>
             <span 
               onClick={() => onDelete(item.id)} 
-              className="cursor-pointer text-red-500 hover:text-red-600 hover:underline"
+              className="cursor-pointer text-red-500 hover:text-red-600 hover:underline flex items-center gap-2"
             >
-              Delete
+               {
+               deletingItemId === item.id ?(
+                <>
+                  <FaSpinner className="animate-spin" /> Deleting...
+                </>
+              ) : (
+                "Delete"
+              )}
             </span>
           </>
         )}

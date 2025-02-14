@@ -1,18 +1,59 @@
-# Getting Started with Create React App
+# Mock API App - Local Setup Guide
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Prerequisites
+Ensure you have the following installed before proceeding:
+- **Node.js** v18.20.6 (for compatibility with dependencies)
+- **npm** (comes with Node.js)
+- A code editor of your choice (e.g., VS Code, WebStorm)
 
-## Available Scripts
+## Installation Steps
 
-In the project directory, you can run:
+1. **Clone the Repository**
+   ```sh
+   git clone https://github.com/ow-tech/mock-api-app.git
+   ```
 
-### `npm start`
+2. **Navigate to the Project Directory**
+   ```sh
+   cd mock-api-app
+   ```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+3. **Open in Your Preferred Code Editor**
+   
+   Example: If using VS Code, run:
+   ```sh
+   code .
+   ```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+4. **Install Dependencies**
+   While in the root directory, open the terminal and run:
+   ```sh
+   npm install
+   ```
+
+## Running the Application
+
+To start the development server, run:
+```sh
+npm run dev
+```
+
+The application should now be running at `http://localhost:3000/`.
+
+## Technologies Used
+- **React** v18.2.0
+- **Tailwind CSS** v3.4.17
+- **TypeScript**
+- **Node.js** v18.20.6
+
+## Additional Notes
+- If you encounter any issues, ensure you have the correct Node.js version installed.
+- Tailwind CSS version 3.4.17 is used for stability.
+- Modify the `package.json` scripts if needed for custom configurations.
+
+Enjoy developing! 🚀
+
+
 
 ### `npm test`
 

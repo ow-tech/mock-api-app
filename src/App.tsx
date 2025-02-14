@@ -6,17 +6,20 @@ import ItemCard from "./Components/ItemCard";
 import ItemForm from "./Components/ItemForm";
 import { Item } from "./types";
 
-
 export default function App() {
   const [items, setItems] = useState<Item[]>([]);
   const [itemToEdit, setItemToEdit] = useState<Item | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [loadingItemId, setLoadingItemId] = useState<number | null>(null);
+  const [deletingItemId, setDeletingItemId] = useState<number | null>(null);
 
   // Fetch items on initial render
   useEffect(() => {
     const getItems = async () => {
+      setIsLoading(true);
       try {
         const data = await fetchItems();
         setItems(data);
@@ -25,6 +28,7 @@ export default function App() {
           error instanceof Error ? error.message : "Failed to get Items."
         );
       }
+      setIsLoading(false);
     };
     getItems();
   }, []);
@@ -36,27 +40,25 @@ export default function App() {
   }) => {
     try {
       if (item.id > 0) {
+        setLoadingItemId(item.id);
         await updateItem(item as Item);
         setItems((prev) =>
           prev.map((i) => (i.id === item.id ? (item as Item) : i))
         );
+        setLoadingItemId(null);
         setItemToEdit(null);
       } else {
         const newItem = await createItem(item);
         setItems((prev) => [...prev, newItem]);
       }
     } catch (error) {
-      setError(
-        error instanceof Error ? error.message : "Failed to Save item."
-      );
+      setError(error instanceof Error ? error.message : "Failed to Save item.");
     }
   };
-  
-  
-  
 
   // Handle Delete Item
   const handleDeleteItem = async (id: number) => {
+    setDeletingItemId(id);
     try {
       await deleteItem(id);
       setItems((prev) => prev.filter((item) => item.id !== id));
@@ -65,6 +67,7 @@ export default function App() {
         error instanceof Error ? error.message : "Failed to delete item."
       );
     }
+    setDeletingItemId(null);
   };
 
   // Sort items based on sort order
@@ -91,15 +94,17 @@ export default function App() {
           </button>
         </div>
       )}
+{isLoading ? <p className="text-center text-gray-500">Loading items...</p>:
+<>
 
       {/* Sorting Controls */}
-     
+
       <div className="flex justify-between items-center mb-4">
-      <button
+        <button
           className="px-4 py-2 bg-blue-500 text-white rounded-md"
           onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
         >
-          Sort {sortOrder === "asc" ? "Descending" : "Ascending"}
+          Sort {sortOrder === "asc" ? "↓" : "↑"}
         </button>
         <h1 className="text-2xl font-bold">Item List</h1>
         <div className="flex gap-2">
@@ -119,8 +124,10 @@ export default function App() {
             onUpdate={handleSaveItem}
             onDelete={handleDeleteItem}
             isEditing={itemToEdit?.id === item.id}
-            onEdit={() => setItemToEdit(item)} 
+            onEdit={() => setItemToEdit(item)}
             onCancelEdit={handleCancelEdit}
+            deletingItemId ={deletingItemId}
+            loadingItemId={loadingItemId}
           />
         ))}
       </div>
@@ -137,6 +144,11 @@ export default function App() {
           </div>
         </div>
       )}
+
+</>
+
+}
+
     </Layout>
   );
 }
