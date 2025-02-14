@@ -20,7 +20,7 @@ interface Item {
 export const fetchItems = async (): Promise<Item[]> => {
   try {
     const response = await axios.get<ApiItem[]>(API_URL);
-    return response.data.slice(0, 10).map((item) => ({
+    return response.data.slice(0, 15).map((item) => ({
       id: item.id,
       title: item.title,
       description: item.body,
