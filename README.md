@@ -1,3 +1,60 @@
+uname -r
+cat /proc/version
+
+sudo apt-get update
+sudo apt-get install -y build-essential bc flex bison libssl-dev libelf-dev dwarves pkg-config git
+
+
+cd ~
+git clone <firefly-kernel-repo-url> rk356x-kernel-5.10
+cd rk356x-kernel-5.10
+# Example (replace with the exact commit/branch that matches your uname -r)
+git checkout 232b494617d8
+
+
+cd ~/rk356x-kernel-5.10
+cp /boot/config-$(uname -r) .config
+yes "" | make olddefconfig
+
+
+
+# It should print: CONFIG_LOCALVERSION="-g232b494617d8"
+grep CONFIG_LOCALVERSION .config || true
+
+
+
+./scripts/config --set-str CONFIG_LOCALVERSION "-g232b494617d8"
+yes "" | make olddefconfig
+
+./scripts/config --module CONFIG_TUN
+yes "" | make olddefconfig
+
+
+# If your kernel was built with clang, add LLVM=1 to the following make commands.
+make modules_prepare
+
+
+zcat /proc/config.gz 2>/dev/null | grep CONFIG_MODVERSIONS || grep CONFIG_MODVERSIONS /boot/config-$(uname -r)
+
+
+
+# GCC build
+make -j"$(nproc)" M=drivers/net modules
+# If clang was used for the kernel:
+# make -j"$(nproc)" LLVM=1 M=drivers/net modules
+
+
+
+
+sudo mkdir -p /lib/modules/$(uname -r)/kernel/drivers/net
+sudo cp drivers/net/tun.ko /lib/modules/$(uname -r)/kernel/drivers/net/
+sudo depmod -a
+
+# Try to load it
+sudo modprobe tun
+
+
+
 # Mock API App - Local Setup Guide
 
 ## Prerequisites
