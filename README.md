@@ -3,7 +3,7 @@ cat /proc/version  ----- inux version 5.10.198-g232b494617d8 (hw@hw-Default-stri
 
 sudo apt-get update
 sudo apt-get install -y build-essential bc flex bison libssl-dev libelf-dev dwarves pkg-config git
-
+https://download.nomachine.com/download/?id=28&platform=linux&distro=arm
 
 wget https://download.nomachine.com/download/8.12/Linux/nomachine_8.12.3_1_arm64.deb
 sudo apt install ./nomachine_*.deb
