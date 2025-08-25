@@ -8,6 +8,47 @@ https://download.nomachine.com/download/?id=28&platform=linux&distro=arm
 wget https://download.nomachine.com/download/8.12/Linux/nomachine_8.12.3_1_arm64.deb
 sudo apt install ./nomachine_*.deb
 
+udo dpkg -i nomachine-enterprise-desktop_9.1.24_6_arm64.deb
+Selecting previously unselected package nomachine-enterprise-desktop.
+(Reading database ... 125273 files and directories currently installed.)
+Preparing to unpack nomachine-enterprise-desktop_9.1.24_6_arm64.deb ...
+Unpacking nomachine-enterprise-desktop (9.1.24-6) ...
+Setting up nomachine-enterprise-desktop (9.1.24-6) ...
+NX> 700 Starting installation at: Mon, 25 Aug 2025 17:44:31.
+NX> 700 Using installation profile: Ubuntu.
+NX> 700 Installation log is: /usr/NX/var/log/install.log.
+NX> 700 Installing nxrunner version: 9.1.24.
+NX> 700 Installing nxplayer version: 9.1.24.
+NX> 700 To connect the remote printer to the local desktop,
+NX> 700 the user account must be a member of the CUPS System Group..
+NX> 700 Player install completed with warnings.
+NX> 700 Please review the install log for details.
+NX> 700 Installing nxnode version: 9.1.24.
+NX> 700 Displaying file: /usr/NX/share/documents/node/cups-info
+
+  CUPS Printing Backend
+
+  The  NoMachine Node  setup procedure could not detect your
+  CUPS installation: either  CUPS  is not installed on  your
+  system or it was installed in a non-standard path. CUPS is
+  needed  in order to  enable  printing  support  in your NX
+  system.
+  Please note that you can enable  printing support for your
+  NX system at any time; to do this make sure  that you have
+  CUPS installed then run:
+
+    /usr/NX/scripts/setup/nxnode --printingsetup <pathname>
+
+  to specify the location of the CUPS root path.
+
+NX> 700 Node install completed with warnings.
+NX> 700 Please review the install log for details.
+NX> 700 Installing nxserver version: 9.1.24.
+NX> 700 Installing nxwebplayer version: 9.1.24.
+NX> 700 Installation completed at: Mon, 25 Aug 2025 17:45:20.
+NX> 700 NoMachine was configured to run the following services:
+NX> 700 NX service on port: 4000
+NX> 700 HTTPS service on port: 4443
 
 
 
