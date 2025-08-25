@@ -8,23 +8,7 @@ https://download.nomachine.com/download/?id=28&platform=linux&distro=arm
 wget https://download.nomachine.com/download/8.12/Linux/nomachine_8.12.3_1_arm64.deb
 sudo apt install ./nomachine_*.deb
 
-udo dpkg -i nomachine-enterprise-desktop_9.1.24_6_arm64.deb
-Selecting previously unselected package nomachine-enterprise-desktop.
-(Reading database ... 125273 files and directories currently installed.)
-Preparing to unpack nomachine-enterprise-desktop_9.1.24_6_arm64.deb ...
-Unpacking nomachine-enterprise-desktop (9.1.24-6) ...
-Setting up nomachine-enterprise-desktop (9.1.24-6) ...
-NX> 700 Starting installation at: Mon, 25 Aug 2025 17:44:31.
-NX> 700 Using installation profile: Ubuntu.
-NX> 700 Installation log is: /usr/NX/var/log/install.log.
-NX> 700 Installing nxrunner version: 9.1.24.
-NX> 700 Installing nxplayer version: 9.1.24.
-NX> 700 To connect the remote printer to the local desktop,
-NX> 700 the user account must be a member of the CUPS System Group..
-NX> 700 Player install completed with warnings.
-NX> 700 Please review the install log for details.
-NX> 700 Installing nxnode version: 9.1.24.
-NX> 700 Displaying file: /usr/NX/share/documents/node/cups-info
+ing file: /usr/NX/share/documents/node/cups-info
 
   CUPS Printing Backend
 
@@ -49,6 +33,50 @@ NX> 700 Installation completed at: Mon, 25 Aug 2025 17:45:20.
 NX> 700 NoMachine was configured to run the following services:
 NX> 700 NX service on port: 4000
 NX> 700 HTTPS service on port: 4443
+user@user:~/Downloads$ ip addr show
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: can0: <NOARP,ECHO> mtu 16 qdisc noop state DOWN group default qlen 10
+    link/can 
+3: can1: <NOARP,ECHO> mtu 16 qdisc noop state DOWN group default qlen 10
+    link/can 
+4: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 50:0a:52:06:84:b0 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.0.232/24 brd 10.0.0.255 scope global dynamic noprefixroute eth0
+       valid_lft 83113sec preferred_lft 83113sec
+    inet6 fe80::ad82:8b03:5829:31be/64 scope link noprefixroute 
+       valid_lft forever preferred_lft forever
+5: eth1: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc mq state DOWN group default qlen 1000
+    link/ether 50:0a:52:06:84:b1 brd ff:ff:ff:ff:ff:ff
+6: wlan0: <NO-CARRIER,BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state DORMANT group default qlen 1000
+    link/ether c0:bf:be:16:8f:ad brd ff:ff:ff:ff:ff:ff
+user@user:~/Downloads$ sudo /usr/NX/bin/nxserver --status
+NX> 111 New connections to NoMachine server are enabled.
+NX> 161 Enabled service: nxserver.
+NX> 161 Enabled service: nxnode.
+NX> 161 Enabled service: nxd.
+NX> 161 Enabled service: nxhtd.
+user@user:~/Downloads$ sudo /usr/NX/bin/nxserver --startup
+NX> 111 New connections to NoMachine server are enabled.
+NX> 161 Service: nxserver already running.
+NX> 161 Service: nxnode already running.
+NX> 161 Service: nxd already running.
+NX> 161 Service: nxhtd already running.
+user@user:~/Downloads$ sudo /usr/NX/bin/nxserver --restart
+NX> 162 Disabled service: nxd.
+NX> 162 Disabled service: nxserver.
+NX> 162 Disabled service: nxnode.
+NX> 162 Disabled service: nxhtd.
+NX> 111 New connections to NoMachine server are enabled.
+NX> 161 Enabled service: nxserver.
+NX> 161 Enabled service: nxnode.
+NX> 161 Enabled service: nxd.
+NX> 161 Enabled service: nxhtd.
+
 
 
 
