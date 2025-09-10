@@ -1,3 +1,4 @@
+b28595adb7228293a4080a7f21ba21e78d1cd758ef3278f9db226c1edc322611
 uname -r ---  5.10.198-g232b494617d8
 cat /proc/version  ----- inux version 5.10.198-g232b494617d8 (hw@hw-Default-string) (aarch64-none-linux-gnu-gcc (GNU Toolchain for the A-profile Architecture 10.3-2021.07 (arm-10.29)) 10.3.1 20210621, GNU ld (GNU Toolchain for the A-profile Architecture 10.3-2021.07 (arm-10.29)) 2.36.1.20210621) #63 SMP Wed Aug 13 14:55:28 CST 2025
 
